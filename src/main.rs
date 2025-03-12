@@ -103,14 +103,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             .watch(Path::new(&root_dir), RecursiveMode::Recursive)
             .unwrap();
 
-        for event in sync_rx.iter() {
-            let Ok(event) = event else {
-                continue;
-            };
-
-            let events = process_event(event);
+        for event in sync_rx.iter().flatten() {
             let tx = tx.clone();
-            tokio::runtime::Handle::current().block_on(async move {
+            tokio::task::spawn(async move {
+                let events = process_event(event);
                 for record in events {
                     tx.send(record).await.unwrap();
                 }
