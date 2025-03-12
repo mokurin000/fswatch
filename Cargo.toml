@@ -1,0 +1,22 @@
+[package]
+name = "fswatch"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+argh = "0.1.13"
+notify = "8.0.0"
+rusqlite = { version = "0.34.0", features = ["bundled"] }
+tokio = { version = "1.44.0", default-features = false, features = [
+    "rt",
+    "time",
+    "macros",
+    "sync",
+    "rt-multi-thread",
+] }
+uuid = { version = "1.15.1", features = ["v4", "rng-rand"] }
+
+[profile.release]
+lto = true
+codegen-units = 1
+panic = "abort"
