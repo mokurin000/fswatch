@@ -62,6 +62,7 @@ fn process_event(event: Event) -> Vec<EventRecord> {
                 ModifyKind::Metadata(_) => return vec![],
                 ModifyKind::Name(RenameMode::From) => "rename_from",
                 ModifyKind::Name(RenameMode::To) => "rename_to",
+                ModifyKind::Name(RenameMode::Any) => "renamed",
                 _ => "modify",
             }
         }
